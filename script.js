@@ -82,6 +82,7 @@ const modalCategory = document.getElementById("vehicle-modal-category");
 const modalDescription = document.getElementById("vehicle-modal-description");
 const modalBody = document.getElementById("vehicle-modal-body");
 const modalFuel = document.getElementById("vehicle-modal-fuel");
+const modalPrice = document.getElementById("vehicle-modal-price");
 const modalQuote = document.getElementById("vehicle-modal-quote");
 let lastFocusedElement = null;
 
@@ -113,6 +114,7 @@ function openVehicleDetails(button) {
     modalDescription.textContent = description.textContent.trim();
     modalBody.textContent = category.split(" · ")[0];
     modalFuel.textContent = fuelLabels[card.dataset.fuel] || "À confirmer selon la version";
+    modalPrice.textContent = card.dataset.price ? card.dataset.price : "Prix sur demande";
     modalPhoto.src = image ? image.src : "";
     modalPhoto.alt = title + " - photo du véhicule";
     modalPhoto.style.display = image && image.style.display !== "none" ? "block" : "none";
