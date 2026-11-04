@@ -131,8 +131,27 @@ function closeVehicleDetails() {
     if (lastFocusedElement) lastFocusedElement.focus();
 }
 
+// Le bouton, la photo, le titre ou toute zone vide de la carte ouvrent la fiche.
+document.querySelectorAll(".car-card").forEach(card => {
+    card.addEventListener("click", event => {
+        // Les contrôles restent prioritaires : le bouton ouvre la fiche lui-même.
+        if (event.target.closest("a, button, input, select, textarea")) return;
+        openVehicleDetails(card.querySelector(".view-car-details"));
+    });
+
+    card.addEventListener("keydown", event => {
+        if ((event.key === "Enter" || event.key === " ") && event.target === card) {
+            event.preventDefault();
+            openVehicleDetails(card.querySelector(".view-car-details"));
+        }
+    });
+});
+
 document.querySelectorAll(".view-car-details").forEach(button => {
-    button.addEventListener("click", () => openVehicleDetails(button));
+    button.addEventListener("click", event => {
+        event.stopPropagation();
+        openVehicleDetails(button);
+    });
 });
 
 vehicleModal.querySelectorAll("[data-close-modal]").forEach(element => {
