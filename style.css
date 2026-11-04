@@ -890,3 +890,36 @@ button, input, select, textarea {
 .car-info button.view-car-details {
     cursor: pointer;
 }
+
+/* PRIX DES VEHICULES */
+.car-price {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin: 0 0 16px;
+}
+.car-price span,
+.vehicle-price span {
+    color: var(--muted);
+    font-size: 12px;
+}
+.car-price strong {
+    color: var(--gold);
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+}
+.vehicle-price {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+    padding: 16px 0;
+    border-top: 1px solid #34363b;
+    border-bottom: 1px solid #34363b;
+}
+.vehicle-price strong {
+    color: var(--gold);
+    font-family: "Montserrat", sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+}
