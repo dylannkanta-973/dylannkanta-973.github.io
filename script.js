@@ -92,9 +92,6 @@ const fuelLabels = {
     hybride: "Hybride",
     "hybride-rechargeable": "Hybride rechargeable",
     electrique: "100 % électrique",
-    gpl: "GPL",
-    gnv: "GNV",
-    hydrogene: "Hydrogène"
 };
 
 function openVehicleDetails(button) {
