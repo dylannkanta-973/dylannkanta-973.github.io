@@ -878,3 +878,15 @@ button, input, select, textarea {
         padding: 24px 20px;
     }
 }
+
+/* Toute la carte véhicule est sélectionnable */
+.car-card {
+    cursor: pointer;
+}
+.car-card:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+}
+.car-info button.view-car-details {
+    cursor: pointer;
+}
