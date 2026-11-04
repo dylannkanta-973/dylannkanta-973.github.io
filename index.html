@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Votre concession automobile spécialisée dans l'importation, l'exportation et la vente de véhicules.">
+    <title>NOVA MOTORS | Import Export Automobile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+    <a href="#accueil" class="logo">NOVA<span> MOTORS</span></a>
+
+    <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu">
+        ☰
+    </button>
+
+    <nav class="navigation" id="navigation">
+        <a href="#accueil">Accueil</a>
+        <a href="#vehicules">Nos véhicules</a>
+        <a href="#services">Import / Export</a>
+        <a href="#apropos">À propos</a>
+        <a href="#contact" class="nav-contact">Contact</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="hero" id="accueil">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="eyebrow">L'AUTOMOBILE SANS FRONTIÈRES</p>
+            <h1>Votre prochaine voiture commence <span>ici.</span></h1>
+            <p class="hero-description">
+                Découvrez notre sélection de véhicules et profitez
+                d'un accompagnement personnalisé pour vos projets
+                d'importation et d'exportation automobile.
+            </p>
+            <div class="hero-buttons">
+                <a href="#vehicules" class="btn btn-gold">Découvrir nos véhicules</a>
+                <a href="#contact" class="btn btn-outline">Nous contacter</a>
+            </div>
+        </div>
+        <div class="hero-bottom">IMPORTATION · EXPORTATION · AUTOMOBILE</div>
+    </section>
+
+    <section class="advantages">
+        <div><strong>01</strong><span>Recherche personnalisée</span></div>
+        <div><strong>02</strong><span>Accompagnement à l'import</span></div>
+        <div><strong>03</strong><span>Solutions d'exportation</span></div>
+    </section>
+
+    <section class="section inventory" id="vehicules">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">NOTRE SÉLECTION</p>
+                <h2>Nos véhicules</h2>
+                <p>Découvrez notre sélection automobile.</p>
+            </div>
+            <span class="inventory-label">CATALOGUE</span>
+        </div>
+
+        <div class="filters">
+            <input type="search" id="search" placeholder="Rechercher une marque ou un modèle...">
+
+            <select id="category">
+                <option value="all">Toutes les catégories</option>
+                <option value="suv">SUV</option>
+                <option value="berline">Berline</option>
+                <option value="sportive">Sportive</option>
+            </select>
+        </div>
+
+        <div class="car-grid">
+
+            <article class="car-card" data-name="bmw x5" data-category="suv">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=85" alt="BMW">
+                    <span class="car-tag">EXEMPLE</span>
+                </div>
+                <div class="car-info">
+                    <p class="car-type">SUV · BMW</p>
+                    <h3>BMW X5</h3>
+                    <p class="car-details">Véhicule de démonstration</p>
+                    <a href="#contact" class="car-link">Demander un renseignement →</a>
+                </div>
+            </article>
+
+            <article class="car-card" data-name="mercedes classe c" data-category="berline">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=85" alt="Mercedes">
+                    <span class="car-tag">EXEMPLE</span>
+                </div>
+                <div class="car-info">
+                    <p class="car-type">BERLINE · MERCEDES</p>
+                    <h3>Mercedes Classe C</h3>
+                    <p class="car-details">Véhicule de démonstration</p>
+                    <a href="#contact" class="car-link">Demander un renseignement →</a>
+                </div>
+            </article>
+
+            <article class="car-card" data-name="porsche 911" data-category="sportive">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=85" alt="Porsche">
+                    <span class="car-tag">EXEMPLE</span>
+                </div>
+                <div class="car-info">
+                    <p class="car-type">SPORTIVE · PORSCHE</p>
+                    <h3>Porsche 911</h3>
+                    <p class="car-details">Véhicule de démonstration</p>
+                    <a href="#contact" class="car-link">Demander un renseignement →</a>
+                </div>
+            </article>
+
+        </div>
+        <p id="no-results" class="no-results" hidden>Aucun véhicule ne correspond à votre recherche.</p>
+        <p class="demo-note">Les véhicules présentés sont des exemples de démonstration, pas des annonces réelles.</p>
+    </section>
+
+    <section class="services section" id="services">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">NOS EXPERTISES</p>
+                <h2>Importation & Exportation</h2>
+                <p>Des solutions adaptées à vos besoins automobiles.</p>
+            </div>
+        </div>
+
+        <div class="service-grid">
+            <article class="service-card">
+                <span class="service-number">01</span>
+                <h3>Importation automobile</h3>
+                <p>Nous vous accompagnons dans la recherche et les démarches liées à l'importation de votre véhicule.</p>
+                <a href="#contact">Parler de votre projet →</a>
+            </article>
+
+            <article class="service-card">
+                <span class="service-number">02</span>
+                <h3>Exportation automobile</h3>
+                <p>Étudions ensemble les possibilités d'exportation de véhicules vers votre destination.</p>
+                <a href="#contact">Parler de votre projet →</a>
+            </article>
+
+            <article class="service-card">
+                <span class="service-number">03</span>
+                <h3>Recherche personnalisée</h3>
+                <p>Vous recherchez un modèle précis ? Faites-nous part de vos critères et de votre budget.</p>
+                <a href="#contact">Faire une demande →</a>
+            </article>
+        </div>
+    </section>
+
+    <section class="about section" id="apropos">
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1100&q=85" alt="Automobile">
+        </div>
+        <div class="about-content">
+            <p class="eyebrow">QUI SOMMES-NOUS ?</p>
+            <h2>Une passion pour l'automobile, une vision internationale.</h2>
+            <p>
+                NOVA MOTORS est une identité de démonstration pour un projet
+                de concession automobile spécialisé dans l'importation,
+                l'exportation et la recherche de véhicules.
+            </p>
+            <p>
+                Notre ambition est de proposer un accompagnement clair,
+                personnalisé et adapté à chaque projet.
+            </p>
+            <a href="#contact" class="btn btn-gold">Découvrir nos services</a>
+        </div>
+    </section>
+
+    <section class="contact section" id="contact">
+        <div class="contact-intro">
+            <p class="eyebrow">PARLONS AUTOMOBILE</p>
+            <h2>Quel est votre projet ?</h2>
+            <p>Vous souhaitez acheter, importer ou exporter un véhicule ? Contactez-nous.</p>
+        </div>
+
+        <form id="contact-form" class="contact-form">
+            <div class="form-row">
+                <input type="text" id="name" placeholder="Votre nom" required>
+                <input type="email" id="email" placeholder="Votre adresse e-mail" required>
+            </div>
+
+            <select id="subject" required>
+                <option value="">Votre demande</option>
+                <option>Recherche de véhicule</option>
+                <option>Importation</option>
+                <option>Exportation</option>
+                <option>Autre demande</option>
+            </select>
+
+            <textarea id="message" rows="5" placeholder="Décrivez votre projet..." required></textarea>
+
+            <button type="submit" class="btn btn-gold">Préparer mon message</button>
+            <p id="form-status" class="form-status" aria-live="polite"></p>
+        </form>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <a href="#accueil" class="logo">NOVA<span> MOTORS</span></a>
+    <p>© <span id="year"></span> NOVA MOTORS. Tous droits réservés.</p>
+    <a href="#accueil">Retour en haut ↑</a>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
