@@ -745,3 +745,136 @@ button, input, select, textarea {
         text-align: center;
     }
 }
+
+
+/* FICHE DETAILLEE DES VEHICULES */
+.car-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.car-info .view-car-details {
+    margin: 2px 0 12px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+}
+.car-info .contact-car-link {
+    padding-top: 2px;
+}
+.vehicle-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding: 24px;
+    align-items: center;
+    justify-content: center;
+}
+.vehicle-modal.is-open {
+    display: flex;
+}
+.vehicle-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.82);
+    backdrop-filter: blur(5px);
+}
+.vehicle-modal-panel {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: min(980px, 100%);
+    max-height: min(850px, 92vh);
+    overflow-y: auto;
+    background: #191b20;
+    border: 1px solid #45413a;
+    box-shadow: 0 25px 80px rgba(0,0,0,.5);
+}
+.vehicle-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    z-index: 3;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255,255,255,.45);
+    background: rgba(0,0,0,.65);
+    color: #fff;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+.vehicle-modal-image {
+    position: relative;
+    min-height: 400px;
+    background: #24262c;
+}
+.vehicle-modal-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    object-fit: cover;
+}
+.vehicle-modal-content {
+    padding: clamp(25px, 4vw, 48px);
+    align-self: center;
+}
+.vehicle-modal-content h2 {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(27px, 4vw, 38px);
+    line-height: 1.15;
+    margin-bottom: 18px;
+}
+.vehicle-modal-description {
+    color: #c5c6ca;
+    font-size: 14px;
+    line-height: 1.8;
+}
+.vehicle-specs {
+    display: grid;
+    gap: 10px;
+    margin: 25px 0;
+}
+.vehicle-specs div {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #34363b;
+}
+.vehicle-specs span {
+    color: var(--muted);
+    font-size: 13px;
+}
+.vehicle-specs strong {
+    text-align: right;
+    font-size: 13px;
+}
+.vehicle-modal-note {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+@media (max-width: 700px) {
+    .vehicle-modal {
+        padding: 10px;
+    }
+    .vehicle-modal-panel {
+        grid-template-columns: 1fr;
+        max-height: 94vh;
+    }
+    .vehicle-modal-image,
+    .vehicle-modal-image img {
+        min-height: 220px;
+        height: 220px;
+    }
+    .vehicle-modal-content {
+        padding: 24px 20px;
+    }
+}
