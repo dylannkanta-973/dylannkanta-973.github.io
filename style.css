@@ -479,6 +479,21 @@ button, input, select, textarea {
     font-weight: 800;
 }
 
+.car-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 45%, #343a42 0, #171b21 48%, #090b0e 100%);
+}
+.car-placeholder-brand {
+    color: rgba(255,255,255,.88);
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-align: center;
+    padding: 20px;
+}
 .car-info {
     padding: 25px;
 }
