@@ -506,6 +506,31 @@
                 <div><span>Motorisation recherchée</span><strong id="vehicle-modal-fuel"></strong></div>
                 <div><span>Disponibilité</span><strong>Sur demande</strong></div>
             </div>
+            <section class="vehicle-configurator" aria-label="Personnalisation du véhicule">
+                <h3>Personnalisez votre véhicule</h3>
+                <p class="config-disclaimer">Aperçu visuel indicatif : les teintes et équipements réellement disponibles dépendent du modèle et de sa finition.</p>
+                <div class="config-group">
+                    <span class="config-label">Couleur extérieure</span>
+                    <div class="paint-options" id="paint-options">
+                        <button type="button" class="paint-swatch is-selected" data-paint="Noir" data-filter="brightness(.48) contrast(1.12) saturate(.75)" style="--swatch:#171717" aria-label="Noir" aria-pressed="true"></button>
+                        <button type="button" class="paint-swatch" data-paint="Blanc" data-filter="grayscale(.85) brightness(1.45) contrast(.82)" style="--swatch:#f2f2ed" aria-label="Blanc" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Gris métallisé" data-filter="grayscale(.8) brightness(1.12) contrast(.92)" style="--swatch:#92979c" aria-label="Gris métallisé" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Rouge" data-filter="sepia(.55) saturate(3.5) hue-rotate(315deg) contrast(1.08)" style="--swatch:#a51e27" aria-label="Rouge" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Bleu" data-filter="sepia(.35) saturate(3) hue-rotate(175deg) contrast(1.05)" style="--swatch:#244b80" aria-label="Bleu" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Vert" data-filter="sepia(.45) saturate(2.7) hue-rotate(55deg)" style="--swatch:#42634d" aria-label="Vert" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Photo d'origine" data-filter="none" style="--swatch:linear-gradient(135deg,#ddd 50%,#333 50%)" aria-label="Photo d'origine" aria-pressed="false"></button>
+                    </div>
+                </div>
+                <div class="config-selects">
+                    <label class="config-group">Sellerie intérieure
+                        <select id="config-interior"><option>Noir</option><option>Beige</option><option>Brun</option><option>Gris</option></select>
+                    </label>
+                    <label class="config-group">Jantes
+                        <select id="config-wheels"><option>Design standard</option><option>Sport</option><option>Noir brillant</option><option>Alliage premium</option></select>
+                    </label>
+                </div>
+                <p class="config-summary" id="config-summary" aria-live="polite">Configuration : Noir · sellerie Noir · jantes Design standard</p>
+            </section>
             <p class="vehicle-modal-note">Les caractéristiques exactes, l'année, la finition, les équipements et la motorisation disponibles dépendent de la version recherchée. Contactez-nous pour obtenir une proposition adaptée.</p>
             <a href="#contact" class="btn btn-gold" id="vehicle-modal-quote">Demander un devis pour ce modèle</a>
         </div>
