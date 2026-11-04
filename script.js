@@ -118,6 +118,7 @@ function openVehicleDetails(button) {
     modalPhoto.src = image ? image.src : "";
     modalPhoto.alt = title + " - photo du véhicule";
     modalPhoto.style.display = image && image.style.display !== "none" ? "block" : "none";
+    resetVehicleConfigurator();
     modalQuote.dataset.model = title;
 
     vehicleModal.classList.add("is-open");
@@ -168,8 +169,50 @@ document.addEventListener("keydown", event => {
 
 modalQuote.addEventListener("click", () => {
     document.getElementById("message").value =
-        "Bonjour, je souhaite obtenir un devis et des informations pour le modèle " +
+        "Bonjour, je souhaite obtenir un devis pour le modèle " +
         modalQuote.dataset.model +
-        ". Merci de me préciser les versions disponibles, les caractéristiques, le prix et les possibilités d'importation.";
+        ". Ma configuration souhaitée : " + configSummary.textContent.replace("Configuration : ", "") +
+        ". Merci de me confirmer les couleurs, selleries, jantes et options réellement disponibles ainsi que le prix final.";
     closeVehicleDetails();
 });
+
+
+// CONFIGURATEUR VISUEL : aperçu de teinte + choix de sellerie et de jantes.
+const paintOptions = document.getElementById("paint-options");
+const configInterior = document.getElementById("config-interior");
+const configWheels = document.getElementById("config-wheels");
+const configSummary = document.getElementById("config-summary");
+let selectedPaint = "Noir";
+let selectedPaintFilter = "brightness(.48) contrast(1.12) saturate(.75)";
+function refreshConfigSummary() {
+    configSummary.textContent = "Configuration : " + selectedPaint +
+        " · sellerie " + configInterior.value + " · jantes " + configWheels.value;
+}
+function resetVehicleConfigurator() {
+    selectedPaint = "Noir";
+    selectedPaintFilter = "brightness(.48) contrast(1.12) saturate(.75)";
+    paintOptions.querySelectorAll(".paint-swatch").forEach((swatch,index) => {
+        const selected = index === 0;
+        swatch.classList.toggle("is-selected",selected);
+        swatch.setAttribute("aria-pressed",String(selected));
+    });
+    configInterior.value = "Noir";
+    configWheels.value = "Design standard";
+    modalPhoto.style.filter = selectedPaintFilter;
+    refreshConfigSummary();
+}
+paintOptions.addEventListener("click",event => {
+    const swatch = event.target.closest(".paint-swatch");
+    if (!swatch) return;
+    selectedPaint = swatch.dataset.paint;
+    selectedPaintFilter = swatch.dataset.filter;
+    paintOptions.querySelectorAll(".paint-swatch").forEach(item => {
+        const selected = item === swatch;
+        item.classList.toggle("is-selected",selected);
+        item.setAttribute("aria-pressed",String(selected));
+    });
+    modalPhoto.style.filter = selectedPaintFilter;
+    refreshConfigSummary();
+});
+configInterior.addEventListener("change",refreshConfigSummary);
+configWheels.addEventListener("change",refreshConfigSummary);
