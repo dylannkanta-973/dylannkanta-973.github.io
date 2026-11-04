@@ -923,3 +923,19 @@ button, input, select, textarea {
     font-size: 30px;
     font-weight: 800;
 }
+
+
+/* CONFIGURATEUR VISUEL DES VEHICULES */
+.vehicle-configurator { margin:24px 0; padding:20px; background:#202228; border:1px solid #3a3c42; }
+.vehicle-configurator h3 { font-family:"Montserrat",sans-serif; font-size:18px; margin-bottom:6px; }
+.config-disclaimer { color:var(--muted); font-size:11px; line-height:1.6; margin-bottom:18px; }
+.config-group { display:flex; flex-direction:column; gap:10px; }
+.config-label,.config-group>span { color:#eee; font-size:13px; font-weight:700; }
+.paint-options { display:flex; flex-wrap:wrap; gap:11px; margin:4px 0 18px; }
+.paint-swatch { width:31px; height:31px; border-radius:50%; border:2px solid #777; background:var(--swatch); cursor:pointer; position:relative; }
+.paint-swatch.is-selected { outline:2px solid var(--gold); outline-offset:3px; border-color:#fff; }
+.config-selects { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.config-selects select { width:100%; padding:10px; color:white; background:#17191e; border:1px solid #44474e; }
+.config-summary { color:var(--gold); font-size:12px; margin-top:16px; line-height:1.6; }
+.vehicle-modal-image img { transition:filter .25s ease; }
+@media (max-width:700px) { .config-selects { grid-template-columns:1fr; } .vehicle-configurator { padding:16px; } }
