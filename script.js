@@ -174,21 +174,129 @@ modalQuote.addEventListener("click", () => {
 });
 
 
-// CONFIGURATEUR VISUEL : la teinte recolore uniquement la carrosserie de l'illustration.
+// CONFIGURATEUR PHOTO : masque peint directement sur la vraie photo du véhicule.
 const paintOptions = document.getElementById("paint-options");
-const paintPreviewBody = document.getElementById("paint-preview-body");
-const previewWheels = document.querySelectorAll(".preview-wheel");
 const configInterior = document.getElementById("config-interior");
 const configWheels = document.getElementById("config-wheels");
 const configSummary = document.getElementById("config-summary");
+const modalPhoto = document.getElementById("vehicle-modal-photo");
+const photoFrame = document.querySelector(".vehicle-modal-image");
+const bodyOverlay = document.getElementById("vehicle-photo-body-overlay");
+const wheelOverlay = document.getElementById("vehicle-photo-wheel-overlay");
+const paintSurface = document.getElementById("vehicle-photo-paint-surface");
+const bodyModeButton = document.getElementById("paint-body-mode");
+const wheelModeButton = document.getElementById("paint-wheel-mode");
+const clearMaskButton = document.getElementById("clear-photo-mask");
+const maskInstruction = document.getElementById("mask-instruction");
+
+const bodyMask = document.createElement("canvas");
+const wheelMask = document.createElement("canvas");
+let bodyMaskContext = bodyMask.getContext("2d");
+let wheelMaskContext = wheelMask.getContext("2d");
+let paintContext = paintSurface.getContext("2d");
 let selectedPaint = "Noir";
 let selectedPaintColor = "#171717";
+let activePaintTarget = "body";
+let isPainting = false;
+let currentMaskKey = "";
+const wheelColors = {
+    "Design standard": "#b8bec5",
+    "Sport": "#707782",
+    "Noir brillant": "#17191d",
+    "Alliage premium": "#d7dde4"
+};
 
 function refreshConfigSummary() {
     configSummary.textContent = "Configuration : carrosserie " + selectedPaint +
         " · sellerie " + configInterior.value + " · jantes " + configWheels.value;
 }
 
+function activeMaskCanvas() {
+    return activePaintTarget === "body" ? bodyMask : wheelMask;
+}
+function activeMaskContext() {
+    return activePaintTarget === "body" ? bodyMaskContext : wheelMaskContext;
+}
+function maskStorageKey(target) {
+    return "nova-photo-mask:" + currentMaskKey + ":" + target;
+}
+function saveActiveMask() {
+    try {
+        localStorage.setItem(maskStorageKey(activePaintTarget), activeMaskCanvas().toDataURL("image/png"));
+    } catch (error) {
+        // Le pinceau reste utilisable même si le navigateur bloque le stockage local.
+    }
+}
+function loadMask(canvas, context, target) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    try {
+        const saved = localStorage.getItem(maskStorageKey(target));
+        if (!saved) return;
+        const image = new Image();
+        image.onload = () => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            renderPhotoOverlays();
+        };
+        image.src = saved;
+    } catch (error) {}
+}
+function resizeMaskCanvas(canvas, context, width, height) {
+    const old = document.createElement("canvas");
+    old.width = canvas.width;
+    old.height = canvas.height;
+    old.getContext("2d").drawImage(canvas, 0, 0);
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(old, 0, 0, width, height);
+}
+function renderOneOverlay(output, mask, color) {
+    const context = output.getContext("2d");
+    if (output.width !== mask.width || output.height !== mask.height) {
+        output.width = mask.width;
+        output.height = mask.height;
+    }
+    context.clearRect(0, 0, output.width, output.height);
+    context.globalCompositeOperation = "source-over";
+    context.fillStyle = color;
+    context.fillRect(0, 0, output.width, output.height);
+    context.globalCompositeOperation = "destination-in";
+    context.drawImage(mask, 0, 0);
+    context.globalCompositeOperation = "source-over";
+}
+function renderPhotoOverlays() {
+    if (!bodyMask.width || !bodyMask.height) return;
+    renderOneOverlay(bodyOverlay, bodyMask, selectedPaintColor);
+    renderOneOverlay(wheelOverlay, wheelMask, wheelColors[configWheels.value] || wheelColors["Design standard"]);
+}
+function initializePhotoMasks() {
+    const rect = photoFrame.getBoundingClientRect();
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));
+    resizeMaskCanvas(bodyMask, bodyMaskContext, width, height);
+    resizeMaskCanvas(wheelMask, wheelMaskContext, width, height);
+    [bodyOverlay, wheelOverlay, paintSurface].forEach(canvas => {
+        canvas.width = width;
+        canvas.height = height;
+    });
+    currentMaskKey = (document.getElementById("vehicle-modal-title").textContent || "vehicle").trim();
+    loadMask(bodyMask, bodyMaskContext, "body");
+    loadMask(wheelMask, wheelMaskContext, "wheels");
+    renderPhotoOverlays();
+}
+function setPaintTarget(target) {
+    activePaintTarget = target;
+    const bodySelected = target === "body";
+    bodyModeButton.classList.toggle("is-active", bodySelected);
+    wheelModeButton.classList.toggle("is-active", !bodySelected);
+    bodyModeButton.setAttribute("aria-pressed", String(bodySelected));
+    wheelModeButton.setAttribute("aria-pressed", String(!bodySelected));
+    paintSurface.classList.add("is-painting");
+    paintSurface.style.pointerEvents = "auto";
+    maskInstruction.textContent = bodySelected
+        ? "Passe le pinceau sur la carrosserie de la photo. Évite les vitres, les pneus et le décor."
+        : "Passe le pinceau sur les jantes de la photo pour modifier leur finition.";
+}
 function resetVehicleConfigurator() {
     selectedPaint = "Noir";
     selectedPaintColor = "#171717";
@@ -197,17 +305,16 @@ function resetVehicleConfigurator() {
         swatch.classList.toggle("is-selected", selected);
         swatch.setAttribute("aria-pressed", String(selected));
     });
-    paintPreviewBody.setAttribute("fill", selectedPaintColor);
     configInterior.value = "Noir";
     configWheels.value = "Design standard";
-    updateWheelPreview();
+    setPaintTarget("body");
+    renderPhotoOverlays();
     refreshConfigSummary();
 }
 
 paintOptions.addEventListener("click", event => {
     const swatch = event.target.closest(".paint-swatch");
     if (!swatch) return;
-
     selectedPaint = swatch.dataset.paint;
     selectedPaintColor = swatch.dataset.color;
     paintOptions.querySelectorAll(".paint-swatch").forEach(item => {
@@ -215,28 +322,66 @@ paintOptions.addEventListener("click", event => {
         item.classList.toggle("is-selected", selected);
         item.setAttribute("aria-pressed", String(selected));
     });
-
-    paintPreviewBody.setAttribute("fill", selectedPaintColor);
+    renderPhotoOverlays();
     refreshConfigSummary();
 });
 
-function updateWheelPreview() {
-    const wheelStyles = {
-        "Design standard": "standard",
-        "Sport": "sport",
-        "Noir brillant": "black",
-        "Alliage premium": "premium"
-    };
-    const selectedStyle = wheelStyles[configWheels.value] || "standard";
-    previewWheels.forEach(wheel => {
-        wheel.hidden = wheel.dataset.wheel !== selectedStyle;
-    });
+bodyModeButton.addEventListener("click", () => setPaintTarget("body"));
+wheelModeButton.addEventListener("click", () => setPaintTarget("wheels"));
+clearMaskButton.addEventListener("click", () => {
+    const canvas = activeMaskCanvas();
+    const context = activeMaskContext();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    saveActiveMask();
+    renderPhotoOverlays();
+});
+
+function paintAt(event) {
+    const rect = paintSurface.getBoundingClientRect();
+    const x = (event.clientX - rect.left) * (paintSurface.width / rect.width);
+    const y = (event.clientY - rect.top) * (paintSurface.height / rect.height);
+    const context = activeMaskContext();
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.strokeStyle = "#fff";
+    context.fillStyle = "#fff";
+    context.lineWidth = Math.max(12, paintSurface.width * 0.045);
+    if (event.type === "pointerdown") {
+        context.beginPath();
+        context.arc(x, y, context.lineWidth / 2, 0, Math.PI * 2);
+        context.fill();
+        context.beginPath();
+        context.moveTo(x, y);
+    } else {
+        context.lineTo(x, y);
+        context.stroke();
+    }
+    renderPhotoOverlays();
 }
+paintSurface.addEventListener("pointerdown", event => {
+    if (paintSurface.style.pointerEvents !== "auto") return;
+    isPainting = true;
+    paintSurface.setPointerCapture(event.pointerId);
+    paintAt(event);
+});
+paintSurface.addEventListener("pointermove", event => {
+    if (isPainting) paintAt(event);
+});
+function finishPainting() {
+    if (!isPainting) return;
+    isPainting = false;
+    saveActiveMask();
+}
+paintSurface.addEventListener("pointerup", finishPainting);
+paintSurface.addEventListener("pointercancel", finishPainting);
 
 configInterior.addEventListener("change", refreshConfigSummary);
 configWheels.addEventListener("change", () => {
-    updateWheelPreview();
+    renderPhotoOverlays();
     refreshConfigSummary();
 });
-
-updateWheelPreview();
+window.addEventListener("resize", () => {
+    if (vehicleModal.classList.contains("is-open") && modalPhoto.complete && modalPhoto.naturalWidth) {
+        initializePhotoMasks();
+    }
+});
