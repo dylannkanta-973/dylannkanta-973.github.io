@@ -2273,17 +2273,32 @@
             </div>
             <section class="vehicle-configurator" aria-label="Personnalisation du véhicule">
                 <h3>Personnalisez votre véhicule</h3>
-                <p class="config-disclaimer">Aperçu visuel indicatif : les teintes et équipements réellement disponibles dépendent du modèle et de sa finition.</p>
+                <p class="config-disclaimer">Choisis une teinte : elle recolore la carrosserie de l’illustration ci-dessous. La photo du véhicule reste inchangée.</p>
                 <div class="config-group">
                     <span class="config-label">Couleur extérieure</span>
                     <div class="paint-options" id="paint-options">
-                        <button type="button" class="paint-swatch is-selected" data-paint="Noir" data-filter="brightness(.48) contrast(1.12) saturate(.75)" style="--swatch:#171717" aria-label="Noir" aria-pressed="true"></button>
-                        <button type="button" class="paint-swatch" data-paint="Blanc" data-filter="grayscale(.85) brightness(1.45) contrast(.82)" style="--swatch:#f2f2ed" aria-label="Blanc" aria-pressed="false"></button>
-                        <button type="button" class="paint-swatch" data-paint="Gris métallisé" data-filter="grayscale(.8) brightness(1.12) contrast(.92)" style="--swatch:#92979c" aria-label="Gris métallisé" aria-pressed="false"></button>
-                        <button type="button" class="paint-swatch" data-paint="Rouge" data-filter="sepia(.55) saturate(3.5) hue-rotate(315deg) contrast(1.08)" style="--swatch:#a51e27" aria-label="Rouge" aria-pressed="false"></button>
-                        <button type="button" class="paint-swatch" data-paint="Bleu" data-filter="sepia(.35) saturate(3) hue-rotate(175deg) contrast(1.05)" style="--swatch:#244b80" aria-label="Bleu" aria-pressed="false"></button>
-                        <button type="button" class="paint-swatch" data-paint="Vert" data-filter="sepia(.45) saturate(2.7) hue-rotate(55deg)" style="--swatch:#42634d" aria-label="Vert" aria-pressed="false"></button>
-                        <button type="button" class="paint-swatch" data-paint="Photo d'origine" data-filter="none" style="--swatch:linear-gradient(135deg,#ddd 50%,#333 50%)" aria-label="Photo d'origine" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch is-selected" data-paint="Noir" data-color="#171717" style="--swatch:#171717" aria-label="Noir" aria-pressed="true"></button>
+                        <button type="button" class="paint-swatch" data-paint="Blanc" data-color="#f2f2ed" style="--swatch:#f2f2ed" aria-label="Blanc" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Gris métallisé" data-color="#92979c" style="--swatch:#92979c" aria-label="Gris métallisé" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Rouge" data-color="#a51e27" style="--swatch:#a51e27" aria-label="Rouge" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Bleu" data-color="#244b80" style="--swatch:#244b80" aria-label="Bleu" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Vert" data-color="#42634d" style="--swatch:#42634d" aria-label="Vert" aria-pressed="false"></button>
+                        <button type="button" class="paint-swatch" data-paint="Gris neutre" data-color="#85898e" style="--swatch:#85898e" aria-label="Gris neutre" aria-pressed="false"></button>
+                    </div>
+                    <div class="paint-preview" aria-label="Aperçu indicatif de la couleur de carrosserie">
+                        <svg viewBox="0 0 440 160" role="img" aria-labelledby="paint-preview-title">
+                            <title id="paint-preview-title">Illustration générique de carrosserie dont la couleur change avec les échantillons</title>
+                            <ellipse cx="220" cy="133" rx="174" ry="9" fill="#111318" opacity=".7"/>
+                            <path id="paint-preview-body" d="M30 112 L37 91 Q43 82 75 77 L116 39 Q128 28 158 27 L275 27 Q302 28 323 50 L353 79 L386 85 Q405 91 411 108 L411 120 L30 120 Z" fill="#171717" stroke="#d6d8db" stroke-opacity=".35" stroke-width="1.5"/>
+                            <path d="M91 75 L126 43 Q134 36 158 36 L206 36 L206 75 Z M216 36 L273 36 Q294 37 311 56 L328 75 L216 75 Z" fill="#202832" stroke="#737b85" stroke-width="2"/>
+                            <path d="M210 35 L210 78" stroke="#aeb4bc" stroke-width="2"/>
+                            <path d="M42 94 L83 91 M362 91 L394 98" stroke="#e7e9ec" stroke-width="3" stroke-linecap="round"/>
+                            <rect x="47" y="105" width="347" height="5" rx="2.5" fill="#555b63"/>
+                            <circle cx="111" cy="119" r="25" fill="#111318" stroke="#7f858e" stroke-width="4"/>
+                            <circle cx="111" cy="119" r="11" fill="#b8bec5"/>
+                            <circle cx="337" cy="119" r="25" fill="#111318" stroke="#7f858e" stroke-width="4"/>
+                            <circle cx="337" cy="119" r="11" fill="#b8bec5"/>
+                        </svg>
                     </div>
                 </div>
                 <div class="config-selects">
