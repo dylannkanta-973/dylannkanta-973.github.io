@@ -952,7 +952,21 @@ button, input, select, textarea {
 .config-selects { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .config-selects select { width:100%; padding:10px; color:white; background:#17191e; border:1px solid #44474e; }
 .config-summary { color:var(--gold); font-size:12px; margin-top:16px; line-height:1.6; }
-.vehicle-modal-image img { transition:filter .25s ease; }
+.paint-preview {
+    margin: 3px 0 20px;
+    padding: 12px 8px 4px;
+    border: 1px solid #3a3c42;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #30333a, #202228);
+}
+.paint-preview svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+#paint-preview-body {
+    transition: fill .2s ease;
+}
 @media (max-width:700px) { .config-selects { grid-template-columns:1fr; } .vehicle-configurator { padding:16px; } }
 
 
