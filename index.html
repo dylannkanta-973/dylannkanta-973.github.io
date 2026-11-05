@@ -2259,6 +2259,9 @@
         <button type="button" class="vehicle-modal-close" aria-label="Fermer la fiche" data-close-modal>×</button>
         <div class="vehicle-modal-image">
             <img id="vehicle-modal-photo" src="" alt="">
+            <canvas id="vehicle-photo-body-overlay" aria-hidden="true"></canvas>
+            <canvas id="vehicle-photo-wheel-overlay" aria-hidden="true"></canvas>
+            <canvas id="vehicle-photo-paint-surface" aria-label="Pinceau de sélection des zones à recolorer"></canvas>
             <span class="car-tag">SUR DEMANDE</span>
         </div>
         <div class="vehicle-modal-content">
@@ -2273,7 +2276,7 @@
             </div>
             <section class="vehicle-configurator" aria-label="Personnalisation du véhicule">
                 <h3>Personnalisez votre véhicule</h3>
-                <p class="config-disclaimer">Choisis une teinte : elle recolore la carrosserie de l’illustration ci-dessous. La photo du véhicule reste inchangée.</p>
+                <p class="config-disclaimer">La photo réelle du véhicule est utilisée. Active le pinceau et sélectionne les zones à recolorer ; les teintes s’appliquent uniquement aux zones sélectionnées.</p>
                 <div class="config-group">
                     <span class="config-label">Couleur extérieure</span>
                     <div class="paint-options" id="paint-options">
@@ -2285,83 +2288,12 @@
                         <button type="button" class="paint-swatch" data-paint="Vert" data-color="#42634d" style="--swatch:#42634d" aria-label="Vert" aria-pressed="false"></button>
                         <button type="button" class="paint-swatch" data-paint="Gris neutre" data-color="#85898e" style="--swatch:#85898e" aria-label="Gris neutre" aria-pressed="false"></button>
                     </div>
-                    <div class="paint-preview" aria-label="Aperçu indicatif de la couleur de carrosserie">
-                        <svg viewBox="0 0 440 160" role="img" aria-labelledby="paint-preview-title">
-                            <title id="paint-preview-title">Illustration générique de carrosserie dont la couleur change avec les échantillons</title>
-                            <ellipse cx="220" cy="133" rx="174" ry="9" fill="#111318" opacity=".7"/>
-                            <path id="paint-preview-body" d="M30 112 L37 91 Q43 82 75 77 L116 39 Q128 28 158 27 L275 27 Q302 28 323 50 L353 79 L386 85 Q405 91 411 108 L411 120 L30 120 Z" fill="#171717" stroke="#d6d8db" stroke-opacity=".35" stroke-width="1.5"/>
-                            <path d="M91 75 L126 43 Q134 36 158 36 L206 36 L206 75 Z M216 36 L273 36 Q294 37 311 56 L328 75 L216 75 Z" fill="#202832" stroke="#737b85" stroke-width="2"/>
-                            <path d="M210 35 L210 78" stroke="#aeb4bc" stroke-width="2"/>
-                            <path d="M42 94 L83 91 M362 91 L394 98" stroke="#e7e9ec" stroke-width="3" stroke-linecap="round"/>
-                            <rect x="47" y="105" width="347" height="5" rx="2.5" fill="#555b63"/>
-
-                            <g class="preview-wheel" data-wheel="standard" transform="translate(111 119)">
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#b8bec5" stroke="#454b53" stroke-width="2"/>
-                                <g stroke="#555d67" stroke-width="3" stroke-linecap="round">
-                                    <path d="M0 -14 V-4 M0 4 V14 M-14 0 H-4 M4 0 H14 M-10 -10 L-3 -3 M3 3 L10 10 M10 -10 L3 -3 M-3 3 L-10 10"/>
-                                </g>
-                                <circle r="4" fill="#252a31" stroke="#d8dde3" stroke-width="1"/>
-                            </g>
-                            <g class="preview-wheel" data-wheel="sport" transform="translate(111 119)" hidden>
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#9da4ad" stroke="#454b53" stroke-width="2"/>
-                                <g stroke="#353b43" stroke-width="4" stroke-linecap="round">
-                                    <path d="M0 -15 L-3 -4 M0 -15 L3 -4 M15 -5 L4 -2 M15 -5 L5 2 M9 12 L3 4 M9 12 L-2 5 M-9 12 L-3 4 M-9 12 L2 5 M-15 -5 L-4 -2 M-15 -5 L-5 2"/>
-                                </g>
-                                <circle r="4" fill="#252a31" stroke="#d8dde3" stroke-width="1"/>
-                            </g>
-                            <g class="preview-wheel" data-wheel="black" transform="translate(111 119)" hidden>
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#17191d" stroke="#555b64" stroke-width="2"/>
-                                <g stroke="#08090b" stroke-width="4" stroke-linecap="round">
-                                    <path d="M0 -15 L-2 -4 M0 -15 L2 -4 M15 -5 L4 -2 M15 -5 L5 2 M9 12 L3 4 M9 12 L-2 5 M-9 12 L-3 4 M-9 12 L2 5 M-15 -5 L-4 -2 M-15 -5 L-5 2"/>
-                                </g>
-                                <circle r="4" fill="#5c626b" stroke="#111318" stroke-width="1"/>
-                            </g>
-                            <g class="preview-wheel" data-wheel="premium" transform="translate(111 119)" hidden>
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#c4cbd2" stroke="#454b53" stroke-width="2"/>
-                                <g stroke="#69727d" stroke-width="2" stroke-linecap="round">
-                                    <path d="M0 -15 V-4 M0 4 V15 M-15 0 H-4 M4 0 H15 M-11 -11 L-3 -3 M3 3 L11 11 M11 -11 L3 -3 M-3 3 L-11 11 M-6 -14 L-2 -4 M6 14 L2 4 M14 -6 L4 -2 M-14 6 L-4 2"/>
-                                </g>
-                                <circle r="4" fill="#252a31" stroke="#eef1f4" stroke-width="1"/>
-                            </g>
-
-                            <g class="preview-wheel" data-wheel="standard" transform="translate(337 119)">
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#b8bec5" stroke="#454b53" stroke-width="2"/>
-                                <g stroke="#555d67" stroke-width="3" stroke-linecap="round">
-                                    <path d="M0 -14 V-4 M0 4 V14 M-14 0 H-4 M4 0 H14 M-10 -10 L-3 -3 M3 3 L10 10 M10 -10 L3 -3 M-3 3 L-10 10"/>
-                                </g>
-                                <circle r="4" fill="#252a31" stroke="#d8dde3" stroke-width="1"/>
-                            </g>
-                            <g class="preview-wheel" data-wheel="sport" transform="translate(337 119)" hidden>
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#9da4ad" stroke="#454b53" stroke-width="2"/>
-                                <g stroke="#353b43" stroke-width="4" stroke-linecap="round">
-                                    <path d="M0 -15 L-3 -4 M0 -15 L3 -4 M15 -5 L4 -2 M15 -5 L5 2 M9 12 L3 4 M9 12 L-2 5 M-9 12 L-3 4 M-9 12 L2 5 M-15 -5 L-4 -2 M-15 -5 L-5 2"/>
-                                </g>
-                                <circle r="4" fill="#252a31" stroke="#d8dde3" stroke-width="1"/>
-                            </g>
-                            <g class="preview-wheel" data-wheel="black" transform="translate(337 119)" hidden>
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#17191d" stroke="#555b64" stroke-width="2"/>
-                                <g stroke="#08090b" stroke-width="4" stroke-linecap="round">
-                                    <path d="M0 -15 L-2 -4 M0 -15 L2 -4 M15 -5 L4 -2 M15 -5 L5 2 M9 12 L3 4 M9 12 L-2 5 M-9 12 L-3 4 M-9 12 L2 5 M-15 -5 L-4 -2 M-15 -5 L-5 2"/>
-                                </g>
-                                <circle r="4" fill="#5c626b" stroke="#111318" stroke-width="1"/>
-                            </g>
-                            <g class="preview-wheel" data-wheel="premium" transform="translate(337 119)" hidden>
-                                <circle r="23" fill="#111318" stroke="#7f858e" stroke-width="3"/>
-                                <circle r="17" fill="#c4cbd2" stroke="#454b53" stroke-width="2"/>
-                                <g stroke="#69727d" stroke-width="2" stroke-linecap="round">
-                                    <path d="M0 -15 V-4 M0 4 V15 M-15 0 H-4 M4 0 H15 M-11 -11 L-3 -3 M3 3 L11 11 M11 -11 L3 -3 M-3 3 L-11 11 M-6 -14 L-2 -4 M6 14 L2 4 M14 -6 L4 -2 M-14 6 L-4 2"/>
-                                </g>
-                                <circle r="4" fill="#252a31" stroke="#eef1f4" stroke-width="1"/>
-                            </g>
-                        </svg>
+                    <div class="photo-mask-tools" aria-label="Sélection des zones de la photo">
+                        <button type="button" id="paint-body-mode" class="mask-mode is-active" aria-pressed="true">Peindre la carrosserie</button>
+                        <button type="button" id="paint-wheel-mode" class="mask-mode" aria-pressed="false">Peindre les jantes</button>
+                        <button type="button" id="clear-photo-mask" class="mask-clear">Effacer la sélection</button>
                     </div>
+                    <p class="mask-instruction" id="mask-instruction" aria-live="polite">Passe le pinceau sur la carrosserie de la photo pour définir la zone à recolorer.</p>
                 </div>
                 <div class="config-selects">
                     <label class="config-group">Sellerie intérieure
