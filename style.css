@@ -952,20 +952,52 @@ button, input, select, textarea {
 .config-selects { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .config-selects select { width:100%; padding:10px; color:white; background:#17191e; border:1px solid #44474e; }
 .config-summary { color:var(--gold); font-size:12px; margin-top:16px; line-height:1.6; }
-.paint-preview {
-    margin: 3px 0 20px;
-    padding: 12px 8px 4px;
-    border: 1px solid #3a3c42;
-    border-radius: 6px;
-    background: linear-gradient(180deg, #30333a, #202228);
-}
-.paint-preview svg {
-    display: block;
+.vehicle-modal-image canvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
 }
-#paint-preview-body {
-    transition: fill .2s ease;
+#vehicle-photo-body-overlay,
+#vehicle-photo-wheel-overlay {
+    pointer-events: none;
+    mix-blend-mode: color;
+    opacity: .82;
+}
+#vehicle-photo-paint-surface {
+    pointer-events: none;
+    background: transparent;
+}
+#vehicle-photo-paint-surface.is-painting {
+    cursor: crosshair;
+    touch-action: none;
+}
+.photo-mask-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 8px;
+}
+.mask-mode,
+.mask-clear {
+    border: 1px solid #555963;
+    border-radius: 5px;
+    padding: 9px 12px;
+    color: var(--text);
+    background: #292c33;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+}
+.mask-mode.is-active {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+.mask-instruction {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
 }
 @media (max-width:700px) { .config-selects { grid-template-columns:1fr; } .vehicle-configurator { padding:16px; } }
 
