@@ -269,6 +269,10 @@ function renderPhotoOverlays() {
     renderOneOverlay(bodyOverlay, bodyMask, selectedPaintColor);
     renderOneOverlay(wheelOverlay, wheelMask, wheelColors[configWheels.value] || wheelColors["Design standard"]);
 }
+modalPhoto.addEventListener("load", () => {
+    if (vehicleModal.classList.contains("is-open")) initializePhotoMasks();
+});
+
 function initializePhotoMasks() {
     const rect = photoFrame.getBoundingClientRect();
     const width = Math.max(1, Math.round(rect.width));
