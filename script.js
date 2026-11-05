@@ -174,42 +174,49 @@ modalQuote.addEventListener("click", () => {
 });
 
 
-// CONFIGURATEUR VISUEL : aperçu de teinte + choix de sellerie et de jantes.
+// CONFIGURATEUR VISUEL : la teinte recolore uniquement la carrosserie de l'illustration.
 const paintOptions = document.getElementById("paint-options");
+const paintPreviewBody = document.getElementById("paint-preview-body");
 const configInterior = document.getElementById("config-interior");
 const configWheels = document.getElementById("config-wheels");
 const configSummary = document.getElementById("config-summary");
 let selectedPaint = "Noir";
-let selectedPaintFilter = "brightness(.48) contrast(1.12) saturate(.75)";
+let selectedPaintColor = "#171717";
+
 function refreshConfigSummary() {
-    configSummary.textContent = "Configuration : " + selectedPaint +
+    configSummary.textContent = "Configuration : carrosserie " + selectedPaint +
         " · sellerie " + configInterior.value + " · jantes " + configWheels.value;
 }
+
 function resetVehicleConfigurator() {
     selectedPaint = "Noir";
-    selectedPaintFilter = "brightness(.48) contrast(1.12) saturate(.75)";
-    paintOptions.querySelectorAll(".paint-swatch").forEach((swatch,index) => {
+    selectedPaintColor = "#171717";
+    paintOptions.querySelectorAll(".paint-swatch").forEach((swatch, index) => {
         const selected = index === 0;
-        swatch.classList.toggle("is-selected",selected);
-        swatch.setAttribute("aria-pressed",String(selected));
+        swatch.classList.toggle("is-selected", selected);
+        swatch.setAttribute("aria-pressed", String(selected));
     });
+    paintPreviewBody.setAttribute("fill", selectedPaintColor);
     configInterior.value = "Noir";
     configWheels.value = "Design standard";
-    modalPhoto.style.filter = selectedPaintFilter;
     refreshConfigSummary();
 }
-paintOptions.addEventListener("click",event => {
+
+paintOptions.addEventListener("click", event => {
     const swatch = event.target.closest(".paint-swatch");
     if (!swatch) return;
+
     selectedPaint = swatch.dataset.paint;
-    selectedPaintFilter = swatch.dataset.filter;
+    selectedPaintColor = swatch.dataset.color;
     paintOptions.querySelectorAll(".paint-swatch").forEach(item => {
         const selected = item === swatch;
-        item.classList.toggle("is-selected",selected);
-        item.setAttribute("aria-pressed",String(selected));
+        item.classList.toggle("is-selected", selected);
+        item.setAttribute("aria-pressed", String(selected));
     });
-    modalPhoto.style.filter = selectedPaintFilter;
+
+    paintPreviewBody.setAttribute("fill", selectedPaintColor);
     refreshConfigSummary();
 });
-configInterior.addEventListener("change",refreshConfigSummary);
-configWheels.addEventListener("change",refreshConfigSummary);
+
+configInterior.addEventListener("change", refreshConfigSummary);
+configWheels.addEventListener("change", refreshConfigSummary);
