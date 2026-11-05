@@ -177,6 +177,7 @@ modalQuote.addEventListener("click", () => {
 // CONFIGURATEUR VISUEL : la teinte recolore uniquement la carrosserie de l'illustration.
 const paintOptions = document.getElementById("paint-options");
 const paintPreviewBody = document.getElementById("paint-preview-body");
+const previewWheels = document.querySelectorAll(".preview-wheel");
 const configInterior = document.getElementById("config-interior");
 const configWheels = document.getElementById("config-wheels");
 const configSummary = document.getElementById("config-summary");
@@ -199,6 +200,7 @@ function resetVehicleConfigurator() {
     paintPreviewBody.setAttribute("fill", selectedPaintColor);
     configInterior.value = "Noir";
     configWheels.value = "Design standard";
+    updateWheelPreview();
     refreshConfigSummary();
 }
 
@@ -218,5 +220,23 @@ paintOptions.addEventListener("click", event => {
     refreshConfigSummary();
 });
 
+function updateWheelPreview() {
+    const wheelStyles = {
+        "Design standard": "standard",
+        "Sport": "sport",
+        "Noir brillant": "black",
+        "Alliage premium": "premium"
+    };
+    const selectedStyle = wheelStyles[configWheels.value] || "standard";
+    previewWheels.forEach(wheel => {
+        wheel.hidden = wheel.dataset.wheel !== selectedStyle;
+    });
+}
+
 configInterior.addEventListener("change", refreshConfigSummary);
-configWheels.addEventListener("change", refreshConfigSummary);
+configWheels.addEventListener("change", () => {
+    updateWheelPreview();
+    refreshConfigSummary();
+});
+
+updateWheelPreview();
